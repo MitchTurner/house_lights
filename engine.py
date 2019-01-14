@@ -1,5 +1,7 @@
 from colr import Colr as C
 
+from neopixel import *
+
 from light_pattern import LightPattern
 
 BLANK = (0, 0, 0)
@@ -7,7 +9,7 @@ BLANK = (0, 0, 0)
 class NeoPixelEngine(object):
     def __init__(self,
                  length: int,
-                 strip: any,
+                 strip: Adafruit_NeoPixel,
                  pattern: LightPattern,
                  debug: bool = False):
 
@@ -28,7 +30,9 @@ class NeoPixelEngine(object):
         print(display)
 
     def send_to_neopixel(self, lights: dict) -> None:
-        raise Exception('I don\'t have the neopixel stuff yet.')
+        for i in range(self.length):
+            if i in lights:
+                self.strip.setPixelColor(i, lights[i])
 
     def start(self) -> None:
         while True:
